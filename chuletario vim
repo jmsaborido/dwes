@@ -1,0 +1,41 @@
+el archivo de configuracion esta en ~/.vimrc
+
+Para salir de vim pulsamos esc para ir al editor de comando
+despues escribimos :q
+si queremos guardar el estado de un archivo escribimos :w
+Si queremos salir sin guardar :q!
+si queremos salir guardando :wq
+con x borramos el caracter sobre el que estamos
+con i añadimos caracteres sobre el que estamos 
+si pulsamos esc y escribimos dw borramos hasta el final de una palabra
+si pulsamos esc y escribimos d$ ó dd borramos hasta el final de la linea
+
+  El formato del mandato de borrar   d   es como sigue:
+
+         [número]   d   objeto      O        d   [número]   objeto
+  donde:
+   número - es cuántas veces se ha de ejecutar el mandato (opcional, defecto=1).
+   d - es el mandato para borrar.
+   objeto - es sobre lo que el mandato va a operar (lista, abajo).
+
+  Una lista corta de objetos:
+   w - desde el cursor hasta el final de la palabra, incluyendo el espacio.
+   e - desde el cursor hasta el final de la palabra, SIN incluir el espacio.
+   $ - desde el cursor hasta el final de la línea.
+
+con u deshacemos el comando que acabamos de hacer
+con U deshacemos los cambios de toda la linea
+CTRL -R???
+con p ponemos lo ultimo que hemos borrado
+con r reemplazamos caracteres
+con R para sustituir texto
+con cw cambiamos una palabra 
+si pulsamos esc y pulsamos / buscamos en el fichero para ir a la siguiente coincidencia pulsamos n y si queremos ir atras N
+% para ir al parentesis opuesto
+:s/palabra a sustituir/palabra sustituta/
+Para cambiar todas las apariciones de una expresión ente dos líneas
+escriba   :#,#s/viejo/nuevo/g   donde #,# son los números de las dos líneas.
+para ejecutar comandos dentro de vim esc + :! (comando)
+o para insertar debajo de la linea actual, O para insertar encima de la linea actual 
+a para añadir texto encima del cursor actual, A para insertar texto al final de la linea
+f1= ayuda
