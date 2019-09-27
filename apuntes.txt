@@ -1,0 +1,111 @@
+Tema 1
+
+VCS sistema de control de versiones
+
+ - Maquina del tiempo
+	Permite ir atrás y adelante en instantáneas (commit) creadas 	anteriormente de dicho código
+
+ -  Programación Colaborativa
+	Permite a varias personas trabajar sobre el mismo codigo
+
+git config –-global user.name
+	muestra el nombre que usaremos en los commit
+git config –-global user.email
+	muestra el email que usaremos en los commit
+
+un repositorio contiene ramas y una rama es una cadena de commits
+master es la rama principal
+
+git init se usa en un directorio una vez y se usa para crear un repositorio vacio. Solo tiene una rama vacia, sin commits.
+
+Para crear un commit hay que dar 2 pasos
+
+	1.  movemos del directorio de trabajo al area de preparacion 	todo lo que queramos añadir al repertorio con git add (git 	add . añade todo el directorio actual, no es lo mismo que git 
+	add * porque no añade los archivos ocultos)
+	en este instante existe 2 archivos, si modificamos el 	original no se cambia el del area de preparacion. Si añadimos 	el original con otro git add, machaca al que esta en el area 	de preparacion. Tambien podemos descartar los cambios del 	directorio de trabajo con git checkout 
+	con git reset head (nombrearchivo) sacamos el archivo del 	area de preparacion 
+
+con git status nos da la situacion actual
+
+	2. una vez añadido al area de preparacion, usamos git commit 	-m “mensaje a introducir” si es el primer commit deberiamos 	llamarlo “Initial commit”
+
+el nombre de la rama apunta al commit mas reciente
+
+el mensaje en el commit deberiamos añadir los cambios efectuados
+las inserciones y los borrados se refieren a lineas
+
+para ignorar archivos se usa el archivo .gitignore puedes usar el nombre o expresiones regulares
+
+git log muestra la lista de todos los commits de la rama
+
+tenemos creado un alias (atajo) con git lg que nos muestra el log mas conciso
+el alias esta guardado en ~/.gitconfig
+
+con git show vemos en detalle el contenido de un commit
+
+HEAD ^ apunta al anterior HEAD
+HEAD ~n apunta al head -N
+	
+git diff muestra la diferencia entre ficheros
+
+si ponemos solo git diff muestra la diferencia entre el directorio de trabajo y el stage o con el HEAD si el stage esta vacio
+
+para comparar stage con commit usamos git diff --staged ó –cached
+
+para comparar dos commits ponemos git diff x..n siendo x y n los id de los commits, siendo x el inicial y n el final
+
+deatached head (head deascoplado) no apunta una rama.
+
+Git chechkout + id comit apunta el head a dicho commit
+
+cuando añades un elemento al .gitignore si tiras para atrás el elemento no se borra, es decir, viaja al pasado, pero el gitignore no viaja al pasado
+
+no se debe cambiar un commit pasado, solo puedes coger cosas de un commit
+
+para volver a un comit anterior podemos hacer git revert que consiste en revertir los cambios hechos en un commit
+
+si es el ultimo commit el que quieres anular podemos usar git reset + id del commit (--hard si queremos cambiar tambien el directorio de trabajo)
+
+o si es el ultimo tambien se puede editar sobre ese ultimo commit y git commit --amend -m “mensaje”
+
+podemos etiquetar commits con git tag + etiqueta + id del commit, asi no perderiamos commits que esten por detras de un reset(aun asi para verlo tendriamos que usar git lg –-all). Para borrrar etiquetas usamos git tag -d nombre
+
+git rm = rm + git add
+
+git mv = mv + git add
+
+git no controla directorios vacias si queremos controlarlo creariamos un archivo .gitkeep en el directorio
+
+Cuando trabajemos con multiples directorios y subdirectorios siempre debemos trabajar con git en la raiz
+
+git branch te dice que ramas hay y en que ramas te encuentras, la rama en la que te encuentras la marca con un asterisco *
+ 
+con git chechout -b nombre creamos una nueva rama que recien creada apuntara al commit que se este apuntando en este momento. Una vez creada te pasa a esa rama. Para que no nos pase a esa rama tendriamos que usar git branch nombre.
+
+Para moverse a una rama usamos git checkout nombre
+
+para eliminar una rama usamos git branch -d nombre, no podemos estar en esa rama si queremos borrarla, si queremos borrarla con todos los commits deberiamos usar git branch -D nombre
+
+fast-forward merge: se puede aplicar cuando se quieren fusionar dos ramas y cuando los commits de la rama A esten contenidos en la rama B para hacerlo nos movemos a la rama que va a cambiar, en este caso la A y una vez ahi usamos git merge + nombre de la rama, en este caso B.
+
+recursive merge o padre multiple: nos movemos a la rama que queremos cambiar, la rama A y escribiriamos git merge B 
+Solo se puede hacer si los cambios en las dos ramas son compatibles. Para forzar esta estrategia deberiamos usar 
+git merge –-no-ff B. en caso de conflicto tendriamos que resolverlo nosotros.
+
+para reescribir un commit usamos rebase, solo debemos hacerlo sobre commits que no hayamos compartido para cancelarlo usamos git rebase --abort
+
+tambien podemos usar squash que haria lo mismo que el rebase, solo que el rebase por cada commit haria un commit, y el squash haria solo 1 commit
+
+GITHUB
+
+separar palabras en repositorios con -, todo en minuscula
+
+git remote muestra los repositorio remotos que tenemos
+git remote add origin (es el nombre del remote por convenio) url
+git remote show te muestra los detalles de un remote
+para eliminar un remoto git remote remove (nombre de remoto)
+con git push empujamos los commits que estan en local y no estan en remoto
+la opcion -u del git push es para hacerle ver al remoto que las ramas master de local y remota son la misma
+si lo pusieramos la rama en local seria una rama de seguimiento, es decir, la rama local estaria actualizada de todo cambio en la remota
+de ahi en adelante solo usariamos git push
+

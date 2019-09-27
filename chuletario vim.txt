@@ -4,7 +4,7 @@ Para salir de vim pulsamos esc para ir al editor de comando
 despues escribimos :q
 si queremos guardar el estado de un archivo escribimos :w
 Si queremos salir sin guardar :q!
-si queremos salir guardando :wq
+si queremos salir guardando :wq o ZZ
 con x borramos el caracter sobre el que estamos
 con i añadimos caracteres sobre el que estamos 
 si pulsamos esc y escribimos dw borramos hasta el final de una palabra
