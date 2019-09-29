@@ -86,7 +86,8 @@ Para moverse a una rama usamos git checkout nombre
 
 para eliminar una rama usamos git branch -d nombre, no podemos estar en esa rama si queremos borrarla, si queremos borrarla con todos los commits deberiamos usar git branch -D nombre
 
-fast-forward merge: se puede aplicar cuando se quieren fusionar dos ramas y cuando los commits de la rama A esten contenidos en la rama B para hacerlo nos movemos a la rama que va a cambiar, en este caso la A y una vez ahi usamos git merge + nombre de la rama, en este caso B.
+fast-forward merge: se puede aplicar cuando se quieren fusionar dos ramas y cuando los commits de la rama A esten contenidos en la rama B para hacerlo nos movemos a la rama que va a cambiar 
+en este caso la A y una vez ahi usamos git merge + nombre de la rama, en este caso B.
 
 recursive merge o padre multiple: nos movemos a la rama que queremos cambiar, la rama A y escribiriamos git merge B 
 Solo se puede hacer si los cambios en las dos ramas son compatibles. Para forzar esta estrategia deberiamos usar 
@@ -108,4 +109,13 @@ con git push empujamos los commits que estan en local y no estan en remoto
 la opcion -u del git push es para hacerle ver al remoto que las ramas master de local y remota son la misma
 si lo pusieramos la rama en local seria una rama de seguimiento, es decir, la rama local estaria actualizada de todo cambio en la remota
 de ahi en adelante solo usariamos git push
+
+con git clone creamos un repositorio local con un remoto si ponemos despues de la url un nombre le ponemos ese nombre en la carpeta
+origin/master representa localmente al repositorio remoto es decir, la ultima vez que se actualizo el remoto el master apuntaba a ese commit (no esta sincronizado en tiempo real y no se puede mover)
+origin/HEAD solo aparece cuando haces un clone y te dice cual es la rama principal del repositorio remoto
+con git remote se conecta a internet y comprueba el remoto y el local
+
+con git fetch te traes commits del remoto y despues tenemos que hacer un git merge o un git rebase
+
+git pull es un git fetch + un git merge si queremos hacerlo con rebase tendriamos que poner git pull --rebase
 
