@@ -56,13 +56,13 @@ para comparar dos commits ponemos git diff x..n siendo x y n los id de los commi
 
 deatached head (head deascoplado) no apunta una rama.
 
-Git chechkout + id comit apunta el head a dicho commit
+Git chechkout + id commit apunta el head a dicho commit
 
 cuando añades un elemento al .gitignore si tiras para atrás el elemento no se borra, es decir, viaja al pasado, pero el gitignore no viaja al pasado
 
 no se debe cambiar un commit pasado, solo puedes coger cosas de un commit
 
-para volver a un comit anterior podemos hacer git revert que consiste en revertir los cambios hechos en un commit
+para volver a un commit anterior podemos hacer git revert que consiste en revertir los cambios hechos en un commit
 
 si es el ultimo commit el que quieres anular podemos usar git reset + id del commit (--hard si queremos cambiar tambien el directorio de trabajo)
 
@@ -113,9 +113,136 @@ de ahi en adelante solo usariamos git push
 con git clone creamos un repositorio local con un remoto si ponemos despues de la url un nombre le ponemos ese nombre en la carpeta
 origin/master representa localmente al repositorio remoto es decir, la ultima vez que se actualizo el remoto el master apuntaba a ese commit (no esta sincronizado en tiempo real y no se puede mover)
 origin/HEAD solo aparece cuando haces un clone y te dice cual es la rama principal del repositorio remoto
-con git remote se conecta a internet y comprueba el remoto y el local
+con git remote show origin se conecta a internet y comprueba el remoto y el local
 
 con git fetch te traes commits del remoto y despues tenemos que hacer un git merge o un git rebase
 
 git pull es un git fetch + un git merge si queremos hacerlo con rebase tendriamos que poner git pull --rebase
 
+para eliminar la rama remota primero la eliminamos en local y despues git push --delete origin nombreDeRama o git push origin :nombreDeRama (este ultimo tambien borra etiquetas remotas)
+para eliminar punteros locales que han sido eliminados usamos git remote prune origin o git push origin :nombreDeRama
+con git push no pusheamos etiquetas, para pushearlas tenemos que poner git push origin etiqueta ó  git push --tags (pushea todas las etiquetas)
+
+una pull request es una peticion que le hacemos al dueño del repositorio para que integre cambios en una rama
+
+las issues sirven para que queden constancia en el repositorio que existe una anomalia, tambien puede ser una mejora. Lo suyo seria llamar a la rama  (numero de incidencia)-(descripcion corta)
+  
+si queremos generar una version para el usuario final deberemos crear una release
+
+el fork sirve para hacer una copia clonada del repositorio y trabajar en ese repositorio. Cuando pusheas una rama forkeada hace automaticamente un pull request. 
+
+para actualizar repositorios remotos: Git stash, git pull y git stash pop
+
+Tema 3
+
+cookies:
+tienen un limite de 50 por sitio, 4kb de tamaño
+estan compuesta por nombre,contenido,dominio,ruta, enviar para tipos de conexion, accesible para secuencias de comandos y caducidad.
+
+Tema 4
+
+en php vamos por snake case, por ejemplo is_null()
+
+para ejecutar codigo php : php + archivo en la terminal
+si ponemos php -a pasamos al modo interactivo y le pasamos las ordenes directamente
+con el script hemos instalado otro interprete llamado psysh
+con la asignacion por referencia $x=$y si cambiamos el valor de y cambiamos el de x, si eliminamos una no eliminamos la otra
+$argc te dice los argumentos que le pasas, siendo 1 cuando ejecutas el script y n+1 por n elementos que le pasas
+bool=booleanos, int =enteros, float=decimal
+potencia = 2 ** 3
+concatenacion = "hola"." pepe"
+strlen te devuelve los bytes de una cadena
+strrev invierte cadena
+strpos te devuelve la primera posicion de una subcadena dentro de una cadena
+strrpos te devuelve la ultima posicion de una subcadena dentro de una cadena
+substr devuelve una subcadena de una cadena
+trim elimina espacios de principio y final de cadena
+para trabajar con cadenas especiales deberemos usar las funciones mb_(funcion)
+para acceder a un caracteren una determinada posicion de una cadena usamos mb_substr(cadena,posicion,1)
+
+para comprobar la nulidad de una variable usariamos is_null($x)
+
+una variable es nula si se le ha asignado null, si aun no tiene valor o si se le ha hecho unset
+
+notice<warning<errores ; cada cual es mas ""peligroso"" que el anterior
+
+comprobaciones de tipos 
+
+gettype() te de vuelve el tipo
+
+is_(tipo) te devuelve si una variable es de un tipo en concreto
+
+comprobaciones de valores
+
+is_numeric() te devuelve si una variable es un numero o un string numerico
+
+ctype_*() devuelve si en una variable todos los caracteres son *  esto es lo mas util de todo 
+
+conversiones de tipos= casting de java de normal no suele ser necesaria
+tambien podemos usar *val()
+
+https://www.php.net/manual/es/language.types.type-juggling.php
+
+
+comparaciones de datos
+https://www.php.net/manual/es/language.operators.comparison.php
+https://www.php.net/manual/es/types.comparisons.php
+
+a??b = devuelve a si no es nulo, si es nulo devuelve b
+
+condicion?: valor falso (esto es una contraccion del ternario)
+
+podemos definir constantes con define("nombre en mayusculas",valor) o const "nombre en mayusculas"=valor;
+
+
+
+Tema 5
+
+Estructuras de control
+https://www.php.net/manual/es/language.control-structures.php
+
+if (condicion):
+----
+elseif(condicion):
+----
+else:
+----
+endif;
+
+switch():
+---
+case()
+---
+endbreak;
+
+while(condicion):
+---
+endwhile;
+
+for():
+---
+endfor;
+
+
+la diferencia entre un require y un include es que el include no para el programa pero el require si 
+
+require_once y include_once abren los archivos una sola vez
+
+en el require|include el nombre tiene que estar con el nombre completo
+
+al pasar al siguiente archivo el interprete se pone en modo html
+
+un archivo que incluyes puede devolver un valor (con return) se guarda con $x= require"fichero.php" devuelve false en caso de fallo
+
+Cuando se incluye un archivo, el código que contiene hereda el ámbito de las variables de la línea en la cual ocurre la inclusión. Cualquier variable disponible en esa línea del archivo que hace la llamada,
+estará disponible en el archivo llamado, desde ese punto en adelante. Sin embargo, todas las funciones y clases definidas en el archivo incluido tienen el ámbito globa
+
+despues de buscar el fichero en el directorio actual lo busca en el include_path .:/usr/share/php eso pasa cuando no indicas una ruta
+
+para asegurarte que no va a mirar en el include_path debemos poner el ./ delante del nombre del fichero
+
+la constante __DIR__ deberiamos de usarla con los require por ejemplo require __DIR__ . "sub/dos.php"
+
+isset(): determina si una variable esta definida y no es null
+
+empty(): determina si una variable esta vacia. Una variable esta vacia si no existe o si su valor esta vacio empty($c)&&!is_numeric($c) te vale para las cadenas vacias y falsas
