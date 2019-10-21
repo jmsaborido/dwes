@@ -245,4 +245,73 @@ la constante __DIR__ deberiamos de usarla con los require por ejemplo require __
 
 isset(): determina si una variable esta definida y no es null
 
-empty(): determina si una variable esta vacia. Una variable esta vacia si no existe o si su valor esta vacio empty($c)&&!is_numeric($c) te vale para las cadenas vacias y falsas
+empty(): determina si una variable esta vacia. Una variable esta vacia si no existe o si su valor esta vacio empty($c)&&!is_numeric($c) te vale para las cadenas vacias y falsas, si no ponemos el !isnumeric entrarian las cadenas con 0
+
+var_dump(): te dice que contiene esa variable y el tipo de la variable. si esta en un script te dice ademas la ruta del script y la linea en la que esta a veces es mejor usar el print_r cuando hay datos muy anidados
+
+Arrays:
+
+
+son dinamicos y se pueden crear de tres formas 
+
+array() viejo
+
+se llama la funcion array y se le da los valores: array("juan",5,2,6.5)
+
+[] moderno
+
+se llama a [] y se le da los valores: ["juan".5,2,6.5]
+
+$a[] = x => añade el elemento x al final del array. Exista $a o no
+
+count(array)= te dice el numero de elementos que tiene
+
+con unset() tambien eliminamos el elemento. si eliminamos una posicion que no es la ultima borramos tanto el valor como el indice
+es decir unset($a[2]) echo $a => estarian todos los indices menos el 2 
+
+Todos los elementos se añaden siempre por el final
+
+por este motivo deberiamos recorrer el array usariamos foreach:
+
+foreach($a as $k=>$v){}
+
+Funciones de Arrays:
+
+https://www.php.net/manual/es/book.array.php
+
+sort($array):Te ordena el array que le envias, no te devuelve otro array, te devuelve un booleano. Te borra las claves, empiezan por 0 y termina por count($array)
+
+rsort($array):Igual que el anterior solo que ordena en orden inverso
+
+asort($array): Ordena un array y mantiene la asociacion de indices.
+
+arsort($array): Igual que el anterior solo que ordena en orden inverso
+
+ksort($array): Ordena un array por claves
+
+krsort($array): Igual que el anterior solo que ordena en orden inverso
+
+natsort($array): Ordena de forma natural, no lexicofrafico
+
+natcasesort($array) Igual que el anterior solo que es insensible a mayusculas y minuscula
+
+usort() uksort() uasort(): Ordena por un orden definido por el usuario ya lo veremos cuando seamos mas inteligentes si eso
+
+para mostrar arrays deberiamos usar print_r()
+
+array_merge($array, $array2...): Combina dos o mas arrays, si son claven String y son iguales se sobreescriben, antiguo se sobreescribe
+
+$array + $array2: Combina dos arrays, si las claves son iguales, numericas o no, prevalece el primero
+
+para saber si un elemento de un array existe podemos usar isset(), pero lo mejor es usar array_key_exists(clave,array) asi sabremos que existe esa clave aunque su valor sea nulo
+
+Pero lo que deberiamos usar es isset($a[1])||array_key_exists(1,$a)
+
+el casting de array (array) x mola con objetos
+
+array_keys(): Devuelves las claves de un array
+
+array_values(): Devuelve los valores de un array
+
+array_combine(): Recibe dos arrays, devuelve un array, siendo el primer array las claves y el segundo los valores
+
