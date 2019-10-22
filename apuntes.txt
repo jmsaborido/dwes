@@ -226,6 +226,7 @@ endfor;
 
 la diferencia entre un require y un include es que el include no para el programa pero el require si 
 
+
 require_once y include_once abren los archivos una sola vez
 
 en el require|include el nombre tiene que estar con el nombre completo
@@ -242,6 +243,10 @@ despues de buscar el fichero en el directorio actual lo busca en el include_path
 para asegurarte que no va a mirar en el include_path debemos poner el ./ delante del nombre del fichero
 
 la constante __DIR__ deberiamos de usarla con los require por ejemplo require __DIR__ . "sub/dos.php"
+
+para llamar a requires
+
+require __DIR__ . "/script";
 
 isset(): determina si una variable esta definida y no es null
 
@@ -314,4 +319,55 @@ array_keys(): Devuelves las claves de un array
 array_values(): Devuelve los valores de un array
 
 array_combine(): Recibe dos arrays, devuelve un array, siendo el primer array las claves y el segundo los valores
+
+en una aplicacion de consola tenemos dos variables $argc y $argv
+
+$argc= numero de argumentos
+$argv= array con los argumentos. en la posicion 0 esta el nombre del fichero 
+
+para terminar la ejecucion de un script usamos la funcion exit().
+
+exit(0)= Exito
+exit(!=0)=Error 
+
+tambien podemos terminarl el programa con die();
+
+en los errores lo suyo es que pongamos codigos de salidas diferentes por cada error
+
+ctype_digit()=> podemos comprobar que es un numero entero positivo
+
+funciones definidas por el usuario:
+
+pueden tener efectos laterales devolver y recibir parametros
+
+deberiamos definir las funciones al principio del script (se pueden poner donde quieras pero la regla de estilos dicen que tiene que estar arriba)
+
+se crean asi: 
+function <nombre de funcion>(<parametros>)
+{
+	<codigo>
+	return ;(opcional, si no devuelve nada, devuelve null)
+}
+
+paso por referencia cambia el valor de lo que se pasa, para usarlo tenemos que poner un & delante
+
+function nombre($m=5)=> por defecto $m tendria el valor 5 no puede ser function nombre($x=5,$y), primero son los no por defecto y despueslos que si tienen valor por defecto
+
+ambitos:
+
+ambito simple al archivo (o """global"""): La variable empieza a existir desde que la creas hasta el final del archivo(o hasta que la destruyes). 
+Cuando hace require la variable de dentro del archivo 1 esta en el 2. Las variables dentro de una funcion son locales.
+Para acceder desde una funcion a una variable global usamos global <variable>
+
+ambito local: pues ambito localxd
+
+ambito superglobales: son variables globales que existen en todas partes sin declararlas como global. 
+https://www.php.net/manual/es/language.variables.superglobals.php
+
+
+si en la funcion ponemos (int $x, int $y) hace una conversion a entero, no es un checkeo es un casting aunque checkea que no sea nulo
+
+
+
+
 
