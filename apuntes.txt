@@ -342,11 +342,11 @@ pueden tener efectos laterales devolver y recibir parametros
 
 deberiamos definir las funciones al principio del script (se pueden poner donde quieras pero la regla de estilos dicen que tiene que estar arriba)
 
-se crean asi: 
-function <nombre de funcion>(<parametros>)
+se crean asi: +
+function <nombre de funcion>(<parametros>)<: tipo de retorno(opcional)> 
 {
 	<codigo>
-	return ;(opcional, si no devuelve nada, devuelve null)
+	return juan;(opcional, si no devuelve nada, devuelve null)
 }
 
 paso por referencia cambia el valor de lo que se pasa, para usarlo tenemos que poner un & delante
@@ -365,9 +365,46 @@ ambito superglobales: son variables globales que existen en todas partes sin dec
 https://www.php.net/manual/es/language.variables.superglobals.php
 
 
-si en la funcion ponemos (int $x, int $y) hace una conversion a entero, no es un checkeo es un casting aunque checkea que no sea nulo
+si en la funcion ponemos (int $x, int $y) hace una conversion a entero, no es un checkeo es un casting aunque checkea que no sea nulo, si le pones ? delante tambien entra los nulos
 
+en caso de array si hace un checkeo
 
+tipado estricto: para que el interpreteno haga conversion de tipos debemos de poner en la primera linea ejecutable del archivo "declare(strict_types=1)"
+se pone en el archivo que llama a la funcion, no en la funcion donde la declaro
 
+Tema 6 
+SAPI: 
+	- el contexto en elq ue se ejecuta el interprete
+	- el entorno que establece la interfaz de comunicacion entre el script y el exterior
 
+dependiendo del contexto tienen sentido algunas variables (por ejemplo) y otras no
 
+CLI Comand line interface (La consola) $argc,$argv
+
+Apache Servidor Web $_GET $_POST 
+
+CGI Common Gateway interface
+
+PHP tiene configuracion para cada SAPI, dentro de cada sapi esta en conf.d y php.ini
+
+dentro de conf.d hay varias extensiones, para activarlas hay que usar sudo phpenmod [version] [sapi] nombredemodulo
+
+php.ini configuracion
+
+todos te ponen los valores comunes el valor por defecto, el valor sugerido en desarrolllo y el valor suferido en produccion
+
+error_reporting => que errorres vas a mostrar por salida
+
+display_errors=> muestra errores
+
+display_startups_errors=> muestra errores 
+
+date.timezone='UTC' debemos trabajar en UTC
+
+crear carpeta llamada web en el home del usuario
+
+Para arrancar el servidor integrado php -s (direccion y puerto(en local localhost:8000))   [no usar sudo]
+
+<?= ?> equivale a un echo 
+
+$_GET es un array que contiene los parametros que se han enviado mediante get y sus valores(Mediante el name, no el ID)
