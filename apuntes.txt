@@ -1,3 +1,5 @@
+sudo dpkg -i (ubicacion descarga) instala un 
+
 Tema 1
 
 VCS sistema de control de versiones
@@ -138,6 +140,8 @@ Tema 3
 cookies:
 tienen un limite de 50 por sitio, 4kb de tamaño
 estan compuesta por nombre,contenido,dominio,ruta, enviar para tipos de conexion, accesible para secuencias de comandos y caducidad.
+
+hub create (nombre repositorio) crea un repositorio remoto con el repositorio local
 
 Tema 4
 
@@ -408,3 +412,84 @@ Para arrancar el servidor integrado php -s (direccion y puerto(en local localhos
 <?= ?> equivale a un echo 
 
 $_GET es un array que contiene los parametros que se han enviado mediante get y sus valores(Mediante el name, no el ID)
+
+extract recibe un array asociativo y crea variables , es decir si tenemos un array con $vars=["a"=> 1,b=>2] y extract($vars) crea $a y $b con valores 1 y 2 respectivamente
+compact hace lo contrario del extract
+array_map(funcion,array) hace a todos los elementos de la funcion una determinada funcion "callable"
+
+Objetos
+$d=new DateTime(); crea un objeto DateTime
+en PHP se llaman a los metodos y atributos de un objeto con ->
+$d->format("Y-m-d H:i:s"); muestra por pantalla "2019-11-05 17:51:14"
+
+$d instanceof DateTime devuelve si el objeto $d es instancia de DateTime
+pata accder a constantes de clases usamos el operador de resolucion de ambito ::
+DateTime::ATOM || $d::ATOM devuelve "Y-m-d\TH:i:sp"
+$a==$b son instancias de la misma clase y las propiedades tienen los mismos valores
+$a===$b son dos objetos identicos , es decir, son iguales tanto en propiedades como en referencias
+para pasar un argumento por referencia a otro objeto usamos $c =& $b en este caso $b y $c son dos nombres para una misma variable
+si hacemos $b= new stdClass(); entonces $c tambien seria una new stdClass();
+
+$b = clone $a crea una copia de un objeto (No tienen la misma referencia)
+
+un objeto puede tener dos tipos de propiedades determinadas y dinamicas
+determinadas= son las definidas por la clase del objeto
+dinamicas se crean asignandole valores
+
+get_object_vars(objeto) te devuelve todas las propiedades de un objeto
+
+Las instancias de DateTime contienen instantes de tiempo
+Las instancias de DateInterval contienen un intervalo de tiempo
+Las instancias de DateTimeZone contienen una zona horaria
+
+DateTime::setTimezone recibe una instancia de DateTimeZone y devuelve una instancia de DateTime. Hacemos esto porque el metodo es estatico
+y por lo tanto lo llamamos desde el objeto,  no desde la instancia
+DateTimeInmutable nunca cambia, solo devuelven instancias de DateTimeInmutable
+
+Excepciones
+
+En php hay errores y excepciones ambas subsclases de Throwable
+En excepciones hay dos clases, Exception y Error. Estas ultimas eran errores convertidos a errores. Se tratan como una excepcion pero a la hora de mostrarla se convertira en Error 
+Las excepciones son excepciones que tu creas mientras que las de error son las creadas por php
+
+para capturar los Errores que no sean subclases de Throwable usamos ErrorException
+ErrorException solo existe para convertir los errorres en Excepciones y viene a sustituir a set_error_handler()
+ErrorException hereda de Exception y a su vez Exception hereda de Throwable
+
+set_error_handleres una funcion que recibe el nombre d euna funcion
+
+la funcion recibe la severidad, el mensaje el fichero y la linea
+
+esta misma funcion (en el ejemplo de clase) devuelve una nueva ErrorException
+ 
+Tema 7 persistencia de datos con PHP 
+sudo -u postgres createuser -P usuario  
+sudo -u postgres createdb datos
+psql -h localhost -U (usuario) -d (base de datos)
+cuando pone => es que no somos superusuarios si pone =# si lo somos
+
+para crear claves ajenas de empleados a departamentos la llamaremos departamento_id
+
+en ~/.pgpass con chmod 600 ~/.pgpass > localhost:5432:*:usuario:usuario
+
+PDO =PHP Data Objects
+son unas clases que nos permiten acceder a una base de datos
+<?= phpinfo() ?> te genera una pagina php con toda la informacion de php
+
+new PDO(DSN,usuario,contraseña)
+DSN=Define los parametros de conexion excepto usuario y contraseña seria:'pgsql:host=localhost;dbname=datos';
+la instancia seria: $pdo= new PDO('pgsql:host=localhost;dbname=datos','usuario','usuario')
+la conexion se cierra cuando se elimina la instancia, como un unset o $pdo=null
+$sent = $pdo->query('SELECT * FROM departamentos')
+crea una sentencia de PDO que es una orden que quieres ejecutar, no se ejecuta
+$sent->fetch fetchColumn fetchALL (fetch() 1 fila, fetchColumn(numero de columna)= Columna, fetchAll()=un array bidimensional con todo)
+con fetch devuele un array y devuelve los valores duplicados con distintos indices, tiene un indice numerico y un indice de la clave de pgsql
+si lo llamas mas veces te devuelve las filas siguientes hasta que se agota y hay que llamarlo otra vez 
+ir pasando filas y mostrar el array:
+foreach ($sent as $fila) { print_r($fila); }
+Si en sql el dato es NULL el PDO lo convierte en php a null
+Si en sql el dato es bool el PDO lo convierte en php a bool
+Si en sql el dato es entero(no numeric) el PDO lo convierte en php a int siempre y cuando ese entero quepa en un entero de php
+el resto lo convierte a String 
+podemos devolver dos variables en un metodo con [$x,$y]=function(){return[3,4];}
+$pdo-> exec() ejecuta una orden que no sea de consulta

@@ -1,23 +1,23 @@
 <?php
-function calcular($args)
-{
-    extract($args);
-    switch ($op) {
-        case '+':
-            $op1 += $op2;
-            break;
-        case '-':
-            $op1 -= $op2;
-            break;
-        case '*':
-            $op1 *= $op2;
-            break;
-        case '/':
-            $op1 /= $op2;
-            break;
-    }
-    return compact("op1", "op2", "op");
-}
+// function calcular($args)
+// {
+//     extract($args);
+//     switch ($op) {
+//         case '+':
+//             $op1 += $op2;
+//             break;
+//         case '-':
+//             $op1 -= $op2;
+//             break;
+//         case '*':
+//             $op1 *= $op2;
+//             break;
+//         case '/':
+//             $op1 /= $op2;
+//             break;
+//     }
+//     return compact("op1", "op2", "op");
+// }
 function comprobarParametros($par, &$errores)
 {
     $res = $par;
@@ -86,29 +86,37 @@ function dibujarFormulario($args, $ops, $errores)
 {
     extract($args);
     ?>
-        <form action="" method="get">
+    <form action="" method="get">
+        <?= dibujarLinea("op1", $errores, $args) ?>
+        <?= dibujarLinea("op2", $errores, $args) ?>
+        <div class="form-group">
+            <label for="op">Operación:</label>
+            <select class="form-control <?= valido('op', $errores) ?>" name="op">
+                <?php foreach ($ops as $o) : ?>
+                    <option value="<?= $o ?>" <?= selected($op, $o) ?>>
+                        <?= $o ?>
+                    </option>
+                <?php endforeach ?>
+            </select>
+            <?= mensajeError('op', $errores) ?>
+        </div>
+        <button type="submit" class="btn btn-primary">Calcular</button>
+    </form>
+<?php
+}
+
+function dibujarLinea($a, $errores, $args)
+{
+    extract($args);
+    $ordenOperando = $a == "op1" ? "Primer" : "Segundo";
+    $value = $a == "op1" ? $op1 : $op2;
+    $val = valido($a, $errores);
+    $err = mensajeError($a, $errores);
+    return <<<EOT
             <div class="form-group">
-                <label for="op1">Primer operando:</label>
-                <input type="text" class="form-control <?= valido('op1', $errores) ?>" id="op1" name="op1" value="<?= $op1 ?>">
-                <?= mensajeError('op1', $errores) ?>
+                <label for="$a"> $ordenOperando operando:</label>
+                <input type="text" class="form-control $val" id="$a" name="$a" value="$value">
+                $err
             </div>
-            <div class="form-group">
-                <label for="op2">Segundo operando:</label>
-                <input type="text" class="form-control <?= valido('op2', $errores) ?>" id="op2" name="op2" value="<?= $op2 ?>">
-                <?= mensajeError('op2', $errores) ?>
-            </div>
-            <div class="form-group">
-                <label for="op">Operación:</label>
-                <select class="form-control <?= valido('op', $errores) ?>" name="op">
-                    <?php foreach ($ops as $o) : ?>
-                        <option value="<?= $o ?>" <?= selected($op, $o) ?>>
-                            <?= $o ?>
-                        </option>
-                    <?php endforeach ?>
-                </select>
-                <?= mensajeError('op', $errores) ?>
-            </div>
-            <button type="submit" class="btn btn-primary">Calcular</button>
-        </form>
-    <?php
-    }
+            EOT;
+}
