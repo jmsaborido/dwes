@@ -540,3 +540,45 @@ los atributos privados deberian estar escritos con $_(nombre)
 el constructor de la clase se llama __constructor()
 
 tambien hay destructores que se llama __destruct() (Normalmente no se usa)
+
+para definir constantes de clase usamos const, para acceder a una constante dentro de la clase usamos self::constante
+
+para llamar a los elementos de una clase de la que se hereda usamos parent::metodo()
+
+siempre hay que usar static en lugar de self excepto para llamar a constantes y propiedades privadas
+
+mirar si acaso namespaces en la documentacion de php
+
+clausura:
+
+las clausura son funciones que recuerdan el ambito donde se definieron. Un ejemplo seria use($variable)
+para usar $variable, esta tiene que estar en el mismo ambito
+
+
+callables : 
+"funcion entre cadenas",
+funcion anonima,
+un array con dos elementos donde el primer elemento es el nombre
+	de una clase y el segundo es un metodo estatico
+clase::metodoestatico
+un array con dos elementos donde el primer elemento es la instancia
+	de una clase y el segundo es un metodo estatico
+
+paginacion
+
+FPP:filas por pagina
+$nfilas: total de filas(consulta sql)
+$npags: total de paginas ceil($nfilas/FPP) 
+$pag:pagina actual (def=1) 1<= $pag <=$npags
+
+limit(sql) numero maximo de filas que devuelve
+offset(sql) numero de filas que te saltas desde el principio
+ambos deberian ir acompañados por un order by
+el limit seria FPP y el offset seria ($pag-1)*FPP
+
+$pdo=conectar()
+$sent=$pdo->prepare(select...)
+$sent->execute();
+$resultado=$sent->fetch(PDO::FETCH_ASSOC);
+return $resultado['nombre']
+
