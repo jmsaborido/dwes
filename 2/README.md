@@ -35,6 +35,9 @@ despues de eso creamos una prueba y usamos en la terminal.
 
 Siendo X = nombre de usuario del paquete e Y = nombre del paquete.
 
+si quieres añadir una dependencia solo para el desarrollo usariamos 
+
+`c require --dev X/Y` 
 
 El control de versiones no tendra en cuenta la carpeta vendor  ya que esto hara que sea mas pesada nuestra aplicacion.
 
@@ -44,7 +47,7 @@ Las versiones de los paquetes que usamos en desarrollo tienen que ser las mismas
 
 `c install` 
 
-Busca en composer.lock y se descarga las versiones de las dependencias.
+Busca en composer.lock y se descarga las versiones de las dependencias. Tanto las require como require dev. Para no instalar las del dev usariamos `c install --no-dev`. Esto lo haria ya la nube por si sola. 
 
 `c update`
 
@@ -52,7 +55,7 @@ Actualiza los paquetes, no la usaremos mucho
 
 En composer `8` = `8.0` = `8.0.0`
 
-##### Tipos de restricciones:
+##### [Tipos de restricciones:](https://getcomposer.org/doc/articles/versions.md)
 
 Para escoger las versiones lo mejor es usar esta [pagina](https://semver.mwl.be)
 
@@ -61,5 +64,38 @@ Para escoger las versiones lo mejor es usar esta [pagina](https://semver.mwl.be)
 3. Rango con guion ` 1.0 - 2.0 `  
 4. Asterisco `1.0.*`
 5. Virgulilla `~1.0`
-   * especifica la version minima y deja que avance el numero menor. 
-6. Circunflejo 
+   * Especifica la version minima y deja que avance el numero menor. 
+6. Circunflejo  `^1.0`
+   * Especifica la version minima dentro de un numero mayor. 
+7. Nombres De Ramas `dev-master`
+8. Restricciones de estabilidad `1.2.0-stable`
+
+### Uso de paquetes dentro de php
+
+Para llamar a un paquete dentro de codigo php usamos
+
+```php
+require __DIR__ . '/vendor/autoload.php';
+```
+
+### [PHP-FIG](http://www.php-fig.org/psr/)
+
+Las directivas que nos deberemos mirar son: 
+
+#### [1 Basic Coding Style](http://www.php-fig.org/psr/psr-1/) 
+#### [4 Autoloader](http://www.php-fig.org/psr/psr-4/) 
+#### [12 Extended Coding Style](http://www.php-fig.org/psr/psr-12/) 
+#### [5 PHPDoc Standard](https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc.md) (En borrador, puede cambiar en un futuro.)
+
+## ***Tema 11 Introduccion a Yii 2***
+
+Un framework es un software universal y reutilizable que proporciona una funcionalidad generica que el programador puede cambiar selectivamente escribiendo codigo especifico para una aplicacion en particular. Tambien proporciona un forma estandar de programar y desplegar aplicaciones. 
+Pueden incluir herramientas para facilitar la programacion. 
+
+Ruby on rails se considera el primer framework con exito
+
+para crear un proyecto en yii usamos 
+
+`composer create-project --prefer-dist ricpelo/yii2-app-basic:dev-master (nombre)`
+
+para arrancar el prorgama usamos `./yii serve`
